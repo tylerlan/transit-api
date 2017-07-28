@@ -6,6 +6,10 @@ const PORT = process.env.PORT || 8000;
 
 app.use(bodyParser.json());
 
+const directions = require('./src/routes/directions');
+
+app.use(directions);
+
 app.get('/', (req, res) => {
   res.send('aok');
 });
