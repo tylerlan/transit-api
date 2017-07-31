@@ -18,7 +18,7 @@ app.use((req, res) => {
   res.sendStatus(404);
 });
 
-if(!module.parent) {
+if (!module.parent) {
   app.listen(PORT, () => {
     /* eslint-disable no-console */
     console.log(`Express server listening on port ${PORT}`);

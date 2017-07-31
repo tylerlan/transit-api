@@ -12,16 +12,15 @@ describe('the api', () => {
 });
 
 
-
 suite('directions route', () => {
   test('GET /directions', (done) => {
     request(server)
-    .get('/directions?origin=work&destination=home&time=1800')
-    .expect(200,
-      {
-        origin: 'work',
-        destination: 'home',
-        time: '1800',
-      }, done)
-  })
-})
+      .get('/directions?origin=work&destination=home&time=1800')
+      .expect(200,
+        {
+          origin: 'work',
+          destination: 'home',
+          time: '1800',
+        }, done);
+  });
+});
