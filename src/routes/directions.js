@@ -4,7 +4,8 @@ const router = express.Router();
 
 
 router.get('/directions', (req, res) => {
-  res.status(200).send(`origin: ${req.query.origin} <br/> distination: ${req.query.destination} <br/> time: ${req.query.time}`)
+  let returnObject = {origin: req.query.origin, destination: req.query.destination, time: req.query.time}
+  res.status(200).send(returnObject);
 })
 
 module.exports = router;
