@@ -13,14 +13,27 @@ describe('the api', () => {
 
 
 suite('directions route', () => {
-  test('GET /directions', (done) => {
+  test('GET /directions without parameters should return 400 Bad Request', (done) => {
     request(server)
-      .get('/directions?origin=work&destination=home&time=1800')
-      .expect(200,
-        {
-          origin: 'work',
-          destination: 'home',
-          time: '1800',
-        }, done);
+      .get('/directions')
+      .expect(400, done);
+  });
+
+  test('GET /directions without destination parameter should return 400 Bad Request', (done) => {
+    request(server)
+      .get('/directions?origin=here')
+      .expect(400, done);
+  });
+
+  test('GET /directions without origin parameter should return 400 Bad Request', (done) => {
+    request(server)
+      .get('/directions?destination=there')
+      .expect(400, done);
+  });
+
+  test('GET /directions with origin and destination should return 200 OK', (done) => {
+    request(server)
+      .get('/directions?origin=here&destination=there')
+      .expect(200, done);
   });
 });
