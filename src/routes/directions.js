@@ -20,7 +20,7 @@ router.get('/directions', (req, res) => {
     origin: request.origin,
     destination: request.destination,
     mode: request.mode || 'transit',
-    alternatives: request.alternatives || false,
+    alternatives: request.alternatives === 'true' || false,
   };
 
   if (request.arrival_time === undefined) {
@@ -35,13 +35,22 @@ router.get('/directions', (req, res) => {
     apiQuery.transit_mode = request.transit_mode;
   }
 
+  const currentTimeInSeconds = Math.round(Date.now() / 1000);
+
   return googleMapsClient.directions(apiQuery).asPromise()
     .then((response) => {
       if (response.json.status !== 'OK') {
         return res.sendStatus(404);
       }
 
-      return res.send(response.json.routes);
+      if (apiQuery.alternatives) {
+        response.json.routes.sort((a, b) => (
+          ((a.legs[0].arrival_time.value - currentTimeInSeconds) + a.legs[0].departure_time.value) -
+          ((b.legs[0].arrival_time.value - currentTimeInSeconds) + b.legs[0].departure_time.value)
+        ));
+      }
+
+      return res.send(response.json.routes.slice(0, 2));
     })
     .catch(err => err);
 });
