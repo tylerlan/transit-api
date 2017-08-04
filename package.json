@@ -23,7 +23,9 @@
     "express": "4.15.3",
     "express-graphql": "0.6.7",
     "graphql": "0.10.5",
+    "node-fetch": "1.7.1",
     "nodemon": "1.11.0",
+    "sinon": "3.0.0",
     "supertest": "3.0.0"
   },
   "devDependencies": {

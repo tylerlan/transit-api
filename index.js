@@ -9,8 +9,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const directions = require('./src/routes/directions');
+const alerts = require('./src/routes/alerts');
 
 app.use(directions);
+app.use(alerts);
 
 app.get('/', (req, res) => {
   res.send('aok');
