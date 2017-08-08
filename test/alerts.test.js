@@ -1,8 +1,6 @@
 const { expect } = require('chai');
 const { suite, test } = require('mocha');
 const sinon = require('sinon');
-const request = require('supertest');
-const server = require('../index.js');
 const Alerts = require('../src/models/Alerts');
 
 const alerts = new Alerts();

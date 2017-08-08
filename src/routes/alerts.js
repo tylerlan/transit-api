@@ -7,8 +7,8 @@ router.get('/alerts', (req, res) => {
   const alerts = new Alerts();
 
   alerts.getAlerts()
-    .then((alerts) => {
-      res.json(alerts);
+    .then((data) => {
+      res.json(data);
     })
     .catch((err) => {
       res.status(500).send(`server error: ${err}`);
