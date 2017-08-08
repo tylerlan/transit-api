@@ -31,7 +31,7 @@ class Directions {
           ));
         }
 
-        return response.json.routes.slice(0, 2);
+        return response.json.routes;
       })
       .catch(err => err);
   }
