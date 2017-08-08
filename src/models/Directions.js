@@ -6,27 +6,34 @@ const googleMapsClient = require('@google/maps').createClient({
 });
 
 class Directions {
-
-
   getDirections(apiQuery) {
-    const currentTimeInSeconds = Math.round(Date.now() / 1000);
+    this.apiQuery = apiQuery;
 
-    return googleMapsClient.directions(apiQuery).asPromise()
-    .then((response) => {
-      if (response.json.status !== 'OK') {
-        return res.sendStatus(404);
-      }
+    const currentUtcTimeInSeconds = Math.round(Date.now() / 1000);
 
-      if (apiQuery.alternatives) {
-        response.json.routes.sort((a, b) => (
-          ((a.legs[0].arrival_time.value - currentTimeInSeconds) + a.legs[0].departure_time.value) -
-          ((b.legs[0].arrival_time.value - currentTimeInSeconds) + b.legs[0].departure_time.value)
-        ));
-      }
+    return googleMapsClient.directions(this.apiQuery).asPromise()
+      .then((response) => {
+        if (response.json.status !== 'OK') {
+          return response.json;
+        }
 
-      return response.json.routes.slice(0, 2);
-    })
-    .catch(err => err);
+        // for now only return routes with arrival_time and departure_time
+        response.json.routes = response.json.routes.filter(route =>
+          route.legs[0].arrival_time && route.legs[0].departure_time);
+
+        // sort multiple routes by best option
+        if (response.json.routes.length > 1) {
+          response.json.routes.sort((a, b) => (
+            ((a.legs[0].arrival_time.value - currentUtcTimeInSeconds)
+              + a.legs[0].departure_time.value) -
+            ((b.legs[0].arrival_time.value - currentUtcTimeInSeconds)
+              + b.legs[0].departure_time.value)
+          ));
+        }
+
+        return response.json.routes.slice(0, 2);
+      })
+      .catch(err => err);
   }
 }
 
