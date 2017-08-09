@@ -11,7 +11,7 @@ function findLineNumberSingular(str) {
 
 function findLines(desc) {
   if (desc.match(/lines [A-Z0-9]{1,3}.+? and [A-Z0-9]{1,3}/)) return desc.match(/lines [A-Z0-9]{1,3}.+?and [A-Z0-9]{1,3}/)[0].replace('lines ', '').replace('and ', '').split(/,{0,} /);
-  return findLineNumberSingular(desc);
+  findLineNumberSingular(desc);
 }
 
 class Alerts {
