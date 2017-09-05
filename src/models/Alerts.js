@@ -1,19 +1,26 @@
-const fetch = require('node-fetch');
-const key = process.env.FIVE_ONE_ONE_API_KEY;
 require('dotenv').config();
+const fetch = require('node-fetch');
+
+const key = process.env.FIVE_ONE_ONE_API_KEY;
 function findLineNumberSingular(str) {
   const lineIndex = str.search('Line ');
   const sliced = str.slice(lineIndex + 5);
   const index = sliced.search(' ');
   const result = sliced.substring(0, index);
-  return result;
+  return [result];
 }
 
 function findLines(desc) {
-  if (desc.match(/lines [A-Z0-9]{1,3}.+? and [A-Z0-9]{1,3}/)) return desc.match(/lines [A-Z0-9]{1,3}.+?and [A-Z0-9]{1,3}/)[0].replace('lines ', '').replace('and ', '').split(/,{0,} /);
-  findLineNumberSingular(desc);
+  if (desc.match(/lines [A-Z0-9]{1,3}.+? and [A-Z0-9]{1,3}/)) {
+    return desc.match(/lines [A-Z0-9]{1,3}.+?and [A-Z0-9]{1,3}/)[0]
+      .replace('lines ', '')
+      .replace('and ', '').split(/,{0,} /);
+  }
+  return findLineNumberSingular(desc);
 }
 
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable class-methods-use-this */
 class Alerts {
   getAlerts() {
     return fetch(`http://api.511.org/transit/servicealerts?api_key=${key}&format=json`)
