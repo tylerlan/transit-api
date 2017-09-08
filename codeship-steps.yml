@@ -1,0 +1,12 @@
+- service: transit-api
+  command: npm run production-lint
+- service: transit-api
+  command: npm run production-test
+- service: transit-api
+  type: push
+  image_name: databraiddb/transit-api
+  encrypted_dockercfg_path: dockercfg.encrypted
+- service: awsdeployment
+  command: aws ecs register-task-definition --cli-input-json file:///deploy/tasks/transit-api.json
+- service: awsdeployment
+  command: aws ecs update-service --cluster databraid-cluster --service transit-api-service --task-definition transit-api

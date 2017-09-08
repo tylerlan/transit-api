@@ -8,7 +8,10 @@
     "dev": "scripts/dev",
     "up": "scripts/up",
     "down": "scripts/down",
-    "lint": "scripts/lint"
+    "lint": "scripts/lint",
+    "production-test": "scripts/production-test",
+    "production-lint": "scripts/production-lint",
+    "start": "scripts/production-start"
   },
   "author": "",
   "license": "MIT",
