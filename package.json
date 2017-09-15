@@ -8,11 +8,15 @@
     "dev": "scripts/dev",
     "up": "scripts/up",
     "down": "scripts/down",
-    "lint": "scripts/lint"
+    "lint": "scripts/lint",
+    "production-test": "scripts/production-test",
+    "production-lint": "scripts/production-lint",
+    "start": "scripts/production-start"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@databraid/env-util": "1.1.2",
     "@google/maps": "0.4.3",
     "body-parser": "1.17.2",
     "cors": "^2.8.4",
